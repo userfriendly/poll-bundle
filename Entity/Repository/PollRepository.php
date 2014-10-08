@@ -5,7 +5,7 @@ namespace Userfriendly\Bundle\PollBundle\Entity\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Custom query repository for Survey related stuff
+ * Custom query repository for Poll related stuff
  */
 class PollRepository extends EntityRepository
 {

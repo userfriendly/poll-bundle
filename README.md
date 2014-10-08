@@ -26,3 +26,10 @@ TODO: have the bundle do this by itself
                 sluggable: true
                 sortable: true
 ```
+
+More TODOs:
+
+- add configuration & routing
+- add GUI things & controllers
+- secure anonymous polling as much as possible
+

@@ -39,7 +39,7 @@ class Poll
      */
     public function setPollQuestion( PollQuestion $pollQuestion = null )
     {
-        $this->pollQuestion = $surveyQuestion;
+        $this->pollQuestion = $pollQuestion;
         return $this;
     }
 
@@ -57,7 +57,7 @@ class Poll
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return \Userfriendly\Bundle\PollBundle\Entity\Survey
+     * @return \Userfriendly\Bundle\PollBundle\Entity\Poll
      */
     public function setCreatedAt( $createdAt )
     {
