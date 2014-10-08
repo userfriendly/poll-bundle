@@ -1,0 +1,59 @@
+{% extends '::base.html.twig' %}
+{% block poll_create_form %}
+
+    <form method="POST">
+
+        <h4>Create a new poll</h4>
+
+        <div class="poll-form-description-field">
+            <label>Poll description or question</label>
+            <textarea style="width: 520px;" name="question"></textarea>
+        </div>
+
+        <div style="padding: 0 0 5px;">
+            <input type="checkbox" name="multiple" /> allow multiple options to be selected
+        </div>
+
+        <div class="poll-form-buttons-field" style="text-align: right; padding: 5px; width: 523px;">
+            <button class="button-add-poll-answer">Add option</button>
+        </div>
+
+        <label>Poll options</label>
+        <ul class="poll-form-answers-field" style="list-style: none; margin: 0; padding: 0;">
+            <li class="poll-answer">
+                <input type="text" name="answer[]" style="vertical-align: top; width: 410px; height: 16px;" />
+                <button style="vertical-align: top;" class="button-delete-poll-answer">Delete option</button>
+            </li>
+            <li class="poll-answer">
+                <input type="text" name="answer[]" style="vertical-align: top; width: 410px; height: 16px;" />
+                <button style="vertical-align: top;" class="button-delete-poll-answer">Delete option</button>
+            </li>
+        </ul>
+
+        <div class="poll-form-buttons-field" style="text-align: center; padding: 5px;">
+            <input type="submit" value="Create poll" />
+        </div>
+
+    </form>
+
+    <script type="text/javascript">
+        $( function()
+        {
+            $( '.button-delete-poll-answer' ).click( deleteOptionClickHandler );
+            $( '.button-add-poll-answer' ).click( function( event )
+            {
+                event.preventDefault();
+                var clone = $( 'li.poll-answer' ).first().clone();
+                $( 'li.poll-answer' ).last().after( clone );
+                $( '.button-delete-poll-answer' ).unbind( 'click' );
+                $( '.button-delete-poll-answer' ).click( deleteOptionClickHandler );
+            });
+        })
+        function deleteOptionClickHandler( event )
+        {
+            event.preventDefault();
+            $( this ).closest( 'li' ).remove();
+        }
+    </script>
+
+{% endblock %}

@@ -16,7 +16,8 @@ Example configuration:
 
 TODO:
 
-- add GUI things & routing
+- add jQuery to requirements
+- add default styling
 - secure anonymous polling as much as possible
 - use in several projects at once to iron out the kinks and contingencies
 

@@ -1,0 +1,8 @@
+#parameters:
+#    uf.example.class:                       Userfriendly\Bundle\PollBundle\Example
+
+#services:
+#    uf.example:
+#        class: %uf.example.class%
+#        arguments:
+#            - '@doctrine.orm.entity_manager'

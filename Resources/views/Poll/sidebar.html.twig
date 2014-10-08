@@ -1,0 +1,28 @@
+{% block polls_list %}
+
+    {% for poll in polls %}
+
+        <div class="poll">
+            <form method="post" action="{{ path('uf_poll_participation',{'poll_id':poll.id}) }}">
+                <input type="hidden" name="poll" value="{{ poll.id }}" />
+                <div class="poll-question">{{ poll.pollQuestion.questionText }}</div>
+                <ul class="poll-options" style="list-style: none; margin: 0; padding: 0;">
+
+                    {% for answer in poll.pollQuestion.answers %}
+                        <li>
+                            <input name="answer[]" value="{{ answer.id }}"
+                            type="{% if poll.pollQuestion.multiple %}checkbox{% else %}radio{% endif %}" />
+                            {{ answer }}
+                        </li>
+                    {% endfor %}
+
+                </ul>
+                <input type="submit" value="submit" />
+            </form>
+        </div>
+
+    {% endfor %}
+
+    [ <a href="{{ path( 'uf_poll_create_poll_form' ) }}">create poll</a> ]
+
+{% endblock %}

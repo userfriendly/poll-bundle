@@ -1,0 +1,12 @@
+
+uf_poll_create_poll_form:
+    pattern:  /create
+    defaults:
+        _controller: UserfriendlyPollBundle:Poll:create
+
+uf_poll_participation:
+    pattern:  /poll/{poll_id}/participate
+    defaults:
+        _controller: UserfriendlyPollBundle:Poll:pollParticipation
+    methods: [POST]
+
