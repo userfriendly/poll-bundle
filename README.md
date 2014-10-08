@@ -30,6 +30,6 @@ TODO: have the bundle do this by itself
 More TODOs:
 
 - add configuration & routing
-- add GUI things & controllers
+- add GUI things
 - secure anonymous polling as much as possible
 
