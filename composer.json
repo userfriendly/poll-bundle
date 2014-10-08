@@ -1,0 +1,29 @@
+{
+    "name":        "userfriendly/poll-bundle",
+    "type":        "symfony-bundle",
+    "description": "Adds simple polls to your Symfony 2 project. Can be used anonymously or with an existing user store.",
+    "keywords":    ["poll", "polling", "survey"],
+    "homepage":    "http://github.com/userfriendly/poll-bundle",
+    "license":     "MIT",
+
+    "authors": [
+        {
+            "name": "Moritz Kraft",
+            "email": "chamalla.extract@gmail.com"
+        }
+    ],
+
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": ">=2.4",
+        "stof/doctrine-extensions-bundle": ">=1.1"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "Userfriendly\\Bundle\\PollBundle": ""
+        }
+    },
+
+    "target-dir": "Userfriendly/Bundle/PollBundle"
+}
