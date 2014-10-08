@@ -5,31 +5,18 @@ Adds simple polls to your Symfony 2 project. Can be used anonymously or with an 
 
 NOTE: this bundle is still in heavy development - do not use, it WILL set your cat on fire.
 
-If you are using an existing user storage, you need to add the following to your doctrine config:
+Example configuration:
 
 ```yaml
-    doctrine:
-        orm:
-            resolve_target_entities:
-                Userfriendly\Bundle\PollBundle\Model\UserInterface: Acme\SomeBundle\Entity\User
+    userfriendly_poll:
+        enable_anonymous_polling: false
+        user_class_registered_polling: Acme\SomeBundle\Entity\User
 
 ```
 
-TODO: have the bundle do this by itself
+TODO:
 
-```yaml
-    # Doctrine Extensions
-    stof_doctrine_extensions:
-        orm:
-            default:
-                timestampable: true
-                sluggable: true
-                sortable: true
-```
-
-More TODOs:
-
-- add configuration & routing
-- add GUI things
+- add GUI things & routing
 - secure anonymous polling as much as possible
+- use in several projects at once to iron out the kinks and contingencies
 
