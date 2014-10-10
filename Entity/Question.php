@@ -5,13 +5,13 @@ namespace Userfriendly\Bundle\PollBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Userfriendly\Bundle\PollBundle\Entity\PollAnswer;
+use Userfriendly\Bundle\PollBundle\Entity\Answer;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="uf_poll__question")
  */
-class PollQuestion
+class Question
 {
     /**
      * @ORM\Id
@@ -26,9 +26,6 @@ class PollQuestion
     /** @ORM\Column(type="boolean") */
     protected $multiple;
 
-    /** @ORM\OneToMany(targetEntity="PollAnswer", mappedBy="pollQuestion", cascade={"persist", "remove", "merge"}, orphanRemoval=true) */
-    protected $answers;
-
     /**
      * Constructor
      */
@@ -36,7 +33,6 @@ class PollQuestion
     {
         $this->questionText = $text;
         $this->multiple = false;
-        $this->answers = new ArrayCollection();
     }
 
     /**
@@ -53,7 +49,7 @@ class PollQuestion
      * Set questionText
      *
      * @param string $questionText
-     * @return PollQuestion
+     * @return \Userfriendly\Bundle\PollBundle\Entity\Question
      */
     public function setQuestionText( $questionText )
     {
@@ -75,7 +71,7 @@ class PollQuestion
      * Set multiple
      *
      * @param boolean $multiple
-     * @return PollQuestion
+     * @return \Userfriendly\Bundle\PollBundle\Entity\Question
      */
     public function setMultiple( $multiple )
     {
@@ -91,26 +87,5 @@ class PollQuestion
     public function getMultiple()
     {
         return $this->multiple;
-    }
-
-    /**
-     * @param PollAnswer
-     * @return PollQuestion
-     */
-    public function addAnswer( PollAnswer $answer )
-    {
-        $answer->setPollQuestion( $this );
-        $this->answers[] = $answer;
-        return $this;
-    }
-
-    /**
-     * Get pollAnswer objects
-     *
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getAnswers()
-    {
-        return $this->answers;
     }
 }

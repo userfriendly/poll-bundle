@@ -4,7 +4,7 @@ namespace Userfriendly\Bundle\PollBundle\Entity;
 
 use Userfriendly\Bundle\PollBundle\Model\UserInterface;
 use Userfriendly\Bundle\PollBundle\Entity\Poll;
-use Userfriendly\Bundle\PollBundle\Entity\PollAnswer;
+use Userfriendly\Bundle\PollBundle\Entity\Answer;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="uf_poll__participation")
  */
-class PollParticipation
+class Participation
 {
     /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue(strategy="AUTO") */
     protected $id;
@@ -23,7 +23,7 @@ class PollParticipation
     /** @ORM\ManyToOne(targetEntity="Poll") @ORM\JoinColumn(name="poll_id", referencedColumnName="id") */
     protected $poll;
 
-    /** @ORM\ManyToOne(targetEntity="PollAnswer") @ORM\JoinColumn(name="answer_id", referencedColumnName="id") */
+    /** @ORM\ManyToOne(targetEntity="Answer") @ORM\JoinColumn(name="answer_id", referencedColumnName="id") */
     protected $answer;
 
     /** @ORM\Column(name="created_at", type="datetime") @Gedmo\Timestampable(on="create") */
@@ -40,18 +40,6 @@ class PollParticipation
     }
 
     /**
-     * Set user
-     *
-     * @param \Userfriendly\Bundle\PollBundle\Model\UserInterface $user
-     * @return \Userfriendly\Bundle\PollBundle\Entity\PollParticipation
-     */
-    public function setUser( User $user = null )
-    {
-        $this->user = $user;
-        return $this;
-    }
-
-    /**
      * Get user
      *
      * @return \Userfriendly\Bundle\PollBundle\Model\UserInterface
@@ -62,14 +50,15 @@ class PollParticipation
     }
 
     /**
-     * Set poll
+     * Set user
      *
-     * @param \Userfriendly\Bundle\PollBundle\Entity\Poll $poll
-     * @return \Userfriendly\Bundle\PollBundle\Entity\PollParticipation
+     * @param \Userfriendly\Bundle\PollBundle\Model\UserInterface $user
+     *
+     * @return \Userfriendly\Bundle\PollBundle\Entity\Participation
      */
-    public function setPoll( Poll $poll = null )
+    public function setUser( User $user = null )
     {
-        $this->poll = $poll;
+        $this->user = $user;
         return $this;
     }
 
@@ -84,21 +73,22 @@ class PollParticipation
     }
 
     /**
-     * Set answer
+     * Set poll
      *
-     * @param \Userfriendly\Bundle\PollBundle\Entity\PollAnswer $answer
-     * @return \Userfriendly\Bundle\PollBundle\Entity\PollParticipation
+     * @param \Userfriendly\Bundle\PollBundle\Entity\Poll $poll
+     *
+     * @return \Userfriendly\Bundle\PollBundle\Entity\Participation
      */
-    public function setAnswer( PollAnswer $answer = null )
+    public function setPoll( Poll $poll = null )
     {
-        $this->answer = $answer;
+        $this->poll = $poll;
         return $this;
     }
 
     /**
      * Get answer
      *
-     * @return \Userfriendly\Bundle\PollBundle\Entity\PollAnswer
+     * @return \Userfriendly\Bundle\PollBundle\Entity\Answer
      */
     public function getAnswer()
     {
@@ -106,14 +96,15 @@ class PollParticipation
     }
 
     /**
-     * Set createdAt
+     * Set answer
      *
-     * @param \DateTime $createdAt
-     * @return \Userfriendly\Bundle\PollBundle\Entity\PollParticipation
+     * @param \Userfriendly\Bundle\PollBundle\Entity\Answer $answer
+     *
+     * @return \Userfriendly\Bundle\PollBundle\Entity\Participation
      */
-    public function setCreatedAt( $createdAt )
+    public function setAnswer( Answer $answer = null )
     {
-        $this->createdAt = $createdAt;
+        $this->answer = $answer;
         return $this;
     }
 

@@ -19,8 +19,17 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root( 'userfriendly_poll' );
         $rootNode
             ->children()
+                ->booleanNode( 'allow_changing_vote' )->defaultFalse()->end()
                 ->booleanNode( 'enable_anonymous_polling' )->defaultTrue()->end()
                 ->scalarNode( 'user_class_registered_polling' )->defaultNull()->end()
+                ->arrayNode( 'threshold' )
+                    ->children()
+                        ->scalarNode( 'timespan' )->default( 1 )->end()
+                        ->scalarNode( 'votes_allowed' )->default( 1 )->end()
+                        ->scalarNode( 'timeout' )->default( 1 )->end()
+                        ->scalarNode( 'grace_period' )->default( 1 )->end()
+                    ->end()
+                ->end()
             ->end();
         return $treeBuilder;
     }

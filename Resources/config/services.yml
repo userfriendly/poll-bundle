@@ -1,8 +1,9 @@
-#parameters:
-#    uf.example.class:                       Userfriendly\Bundle\PollBundle\Example
+parameters:
+    uf.poll.voting.class: Userfriendly\Bundle\PollBundle\Poll\Voting
 
-#services:
-#    uf.example:
-#        class: %uf.example.class%
-#        arguments:
-#            - '@doctrine.orm.entity_manager'
+services:
+    uf.poll.voting:
+        class: '%uf.poll.voting.class%'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%uf.poll.config%'

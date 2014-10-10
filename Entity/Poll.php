@@ -2,7 +2,7 @@
 
 namespace Userfriendly\Bundle\PollBundle\Entity;
 
-use Userfriendly\Bundle\PollBundle\Entity\PollQuestion;
+use Userfriendly\Bundle\PollBundle\Entity\Question;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,11 +15,29 @@ class Poll
     /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue(strategy="AUTO") */
     protected $id;
 
-    /** @ORM\OneToOne(targetEntity="PollQuestion",cascade={"persist"}) @ORM\JoinColumn(name="pollquestion_id", referencedColumnName="id") */
-    protected $pollQuestion;
+    /** @ORM\ManyToOne(targetEntity="Question") @ORM\JoinColumn(name="question_id", referencedColumnName="id") */
+    protected $question;
+
+    /** @ORM\OneToMany(targetEntity="Answer", mappedBy="poll", cascade={"persist", "remove", "merge"}, orphanRemoval=true) */
+    protected $answers;
+
+    /** @ORM\Column(name="closed_at", type="datetime") */
+    protected $closedAt;
 
     /** @ORM\Column(name="created_at", type="datetime") @Gedmo\Timestampable(on="create") */
     protected $createdAt;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->answers = new ArrayCollection();
+    }
+
+    /*'''''''''''''''''''''''*\
+    |    Getters & setters    |
+    \*_______________________*/
 
     /**
      * Get id
@@ -32,36 +50,66 @@ class Poll
     }
 
     /**
-     * Set pollQuestion
+     * Set question
      *
-     * @param \Userfriendly\Bundle\PollBundle\Entity\PollQuestion $pollQuestion
+     * @param \Userfriendly\Bundle\PollBundle\Entity\Question $question
+     *
      * @return \Userfriendly\Bundle\PollBundle\Entity\Poll
      */
-    public function setPollQuestion( PollQuestion $pollQuestion = null )
+    public function setQuestion( Question $question = null )
     {
-        $this->pollQuestion = $pollQuestion;
+        $this->question = $question;
         return $this;
     }
 
     /**
-     * Get pollQuestion
+     * Get question
      *
-     * @return \Userfriendly\Bundle\PollBundle\Entity\PollQuestion
+     * @return \Userfriendly\Bundle\PollBundle\Entity\Question
      */
-    public function getPollQuestion()
+    public function getQuestion()
     {
-        return $this->pollQuestion;
+        return $this->question;
     }
 
     /**
-     * Set createdAt
+     * @param \Userfriendly\Bundle\PollBundle\Entity\Answer
      *
-     * @param \DateTime $createdAt
      * @return \Userfriendly\Bundle\PollBundle\Entity\Poll
      */
-    public function setCreatedAt( $createdAt )
+    public function addAnswer( Answer $answer )
     {
-        $this->createdAt = $createdAt;
+        $answer->setPoll( $this );
+        $this->answers[] = $answer;
+        return $this;
+    }
+
+    /**
+     * Get Answer objects
+     *
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getAnswers()
+    {
+        return $this->answers;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getClosedAt()
+    {
+        return $this->closedAt;
+    }
+
+    /**
+     * @param \DateTime $closedAt
+     *
+     * @return \Userfriendly\Bundle\PollBundle\Entity\Poll
+     */
+    public function setClosedAt( \DateTime $closedAt )
+    {
+        $this->closedAt = $closedAt;
         return $this;
     }
 
@@ -73,5 +121,38 @@ class Poll
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /*'''''''''''''''''''*\
+    |    Other methods    |
+    \*___________________*/
+
+    /**
+     * Check if poll is already closed
+     *
+     * @return boolean
+     */
+    public function isClosed()
+    {
+        $now = new \DateTime( "now" );
+        return $now > $this->closedAt;
+    }
+
+    /**
+     * Check if the answers provided belong to this poll and return the respective entity objects
+     *
+     * @param array $answerIdsProvided
+     *
+     * @return array
+     */
+    public function verifyAnswers( array $answerIdsProvided = array() )
+    {
+        $verifiedAnswers = array();
+        foreach ( $this->answers as $answer )
+        {
+            if ( in_array( $answer->getId(), $idProvided ) )
+                $verifiedAnswers[] = $answer;
+        }
+        return $verifiedAnswers;
     }
 }

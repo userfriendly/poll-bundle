@@ -50,28 +50,25 @@ class UserfriendlyPollExtension extends Extension implements PrependExtensionInt
 
     public function load( array $configs, ContainerBuilder $container )
     {
-        // Configuration
+        /////////////////////////////////////////////
+        // Process configuration and load services //
+        /////////////////////////////////////////////
         $configuration = new Configuration();
         $config = $this->processConfiguration( $configuration, $configs );
-        // Services
         $loader = new YamlFileLoader( $container, new FileLocator( __DIR__ . '/../Resources/config' ));
         $loader->load( 'services.yml' );
-        // Set parameters
-        $enableAnonymousPolling = false;
-        if ( isset( $config['enable_anonymous_polling'] ) && $config['enable_anonymous_polling'] )
-        {
-            $enableAnonymousPolling = true;
-        }
-        $container->setParameter( 'uf_poll_enable_anonymous_polling', $enableAnonymousPolling );
-        $enableRegisteredPolling = false;
-        if ( isset( $config['user_class_registered_polling'] ) && $config['user_class_registered_polling'] )
-        {
-            $enableRegisteredPolling = true;
-        }
-        $container->setParameter( 'uf_poll_enable_registered_polling', $enableAnonymousPolling );
-        if ( !$enableAnonymousPolling && !$enableRegisteredPolling )
+        //////////////////////////////////
+        // Set configuration parameters //
+        //////////////////////////////////
+        $configParams = array();
+        $configParams['allow_changing_vote'] = isset( $config['allow_changing_vote'] ) && $config['allow_changing_vote'];
+        $configParams['threshold'] = $config['threshold'];
+        $configParams['anonymous_polling'] = isset( $config['enable_anonymous_polling'] ) && $config['enable_anonymous_polling'];
+        $configParams['registered_polling'] = isset( $config['user_class_registered_polling'] ) && $config['user_class_registered_polling'];
+        if ( !$configParams['anonymous_polling'] && !$configParams['registered_polling'] )
         {
             throw new \Exception( 'Configuration error: you must enable anonymous polling or define a user class!' );
         }
+        $container->setParameter( 'uf.poll.config', $configParams );
     }
 }

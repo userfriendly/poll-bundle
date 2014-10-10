@@ -2,7 +2,7 @@
 
 namespace Userfriendly\Bundle\PollBundle\Entity;
 
-use Userfriendly\Bundle\PollBundle\Entity\PollQuestion;
+use Userfriendly\Bundle\PollBundle\Entity\Poll;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,13 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="uf_poll__answer")
  */
-class PollAnswer
+class Answer
 {
     /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue(strategy="AUTO") */
     protected $id;
 
-    /** @ORM\ManyToOne(targetEntity="PollQuestion") @ORM\JoinColumn(name="pollquestion_id", referencedColumnName="id") */
-    protected $pollQuestion;
+    /** @ORM\ManyToOne(targetEntity="Poll") @ORM\JoinColumn(name="poll_id", referencedColumnName="id") */
+    protected $poll;
 
     /** @ORM\Column(type="string") */
     protected $answerText;
@@ -43,7 +43,7 @@ class PollAnswer
      * Set answerText
      *
      * @param string $answerText
-     * @return \Userfriendly\Bundle\PollBundle\Entity\PollAnswer
+     * @return \Userfriendly\Bundle\PollBundle\Entity\Answer
      */
     public function setAnswerText( $answerText )
     {
@@ -62,25 +62,25 @@ class PollAnswer
     }
 
     /**
-     * Set pollQuestion
+     * Set poll
      *
-     * @param \Userfriendly\Bundle\PollBundle\Entity\PollQuestion $pollQuestion
-     * @return \Userfriendly\Bundle\PollBundle\Entity\PollAnswer
+     * @param \Userfriendly\Bundle\PollBundle\Entity\Poll $poll
+     * @return \Userfriendly\Bundle\PollBundle\Entity\Answer
      */
-    public function setPollQuestion( PollQuestion $pollQuestion = null )
+    public function setPoll( Poll $poll = null )
     {
-        $this->pollQuestion = $pollQuestion;
+        $this->poll = $poll;
         return $this;
     }
 
     /**
-     * Get pollQuestion
+     * Get poll
      *
-     * @return \Userfriendly\Bundle\PollBundle\Entity\PollQuestion
+     * @return \Userfriendly\Bundle\PollBundle\Entity\Poll
      */
-    public function getPollQuestion()
+    public function getPoll()
     {
-        return $this->pollQuestion;
+        return $this->poll;
     }
 
     /**
