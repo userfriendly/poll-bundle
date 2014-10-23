@@ -56,7 +56,7 @@ class Participation
      *
      * @return \Userfriendly\Bundle\PollBundle\Entity\Participation
      */
-    public function setUser( User $user = null )
+    public function setUser( UserInterface $user = null )
     {
         $this->user = $user;
         return $this;
