@@ -62,7 +62,21 @@ class UserfriendlyPollExtension extends Extension implements PrependExtensionInt
         //////////////////////////////////
         $configParams = array();
         $configParams['allow_changing_vote'] = isset( $config['allow_changing_vote'] ) && $config['allow_changing_vote'];
-        $configParams['threshold'] = $config['threshold'];
+        // TODO: use the configuration class properly instead of doing the following:
+        if ( array_key_exists( 'threshold', $config ))
+        {
+            $configParams['threshold'] = $config['threshold'];
+        }
+        else
+        {
+            $configParams['threshold'] = array(
+                                             'timespan' => 1,
+                                             'votes_allowed' => 1,
+                                             'timeout' => 1,
+                                             'grace_period' => 1,
+                                         );
+        }
+        // ...
         $configParams['anonymous_polling'] = isset( $config['enable_anonymous_polling'] ) && $config['enable_anonymous_polling'];
         $configParams['registered_polling'] = isset( $config['user_class_registered_polling'] ) && $config['user_class_registered_polling'];
         if ( !$configParams['anonymous_polling'] && !$configParams['registered_polling'] )
